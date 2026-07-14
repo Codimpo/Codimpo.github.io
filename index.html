@@ -1,0 +1,498 @@
+<meta name='viewport' content='width=device-width, initial-scale=1'/><!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ВсеОкрошки.ру -- Окрошки на всех напитках планеты</title>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: #1a1a1a;
+        color: #e0e0e0;
+        line-height: 1.6;
+    }
+    header {
+        background: linear-gradient(135deg, #2d5016, #4a7c23);
+        padding: 30px 20px;
+        text-align: center;
+        border-bottom: 5px solid #ffcc00;
+    }
+    header h1 {
+        font-size: 3em;
+        color: #ffcc00;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        letter-spacing: 2px;
+    }
+    header p {
+        font-size: 1.2em;
+        color: #fff;
+        margin-top: 10px;
+    }
+    nav {
+        background: #252525;
+        padding: 15px;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        border-bottom: 2px solid #4a7c23;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+    }
+    nav button {
+        background: #3a3a3a;
+        color: #ffcc00;
+        border: 2px solid #ffcc00;
+        padding: 10px 20px;
+        cursor: pointer;
+        font-size: 1em;
+        border-radius: 25px;
+        transition: 0.3s;
+        font-weight: bold;
+        white-space: nowrap;
+    }
+    nav button:hover {
+        background: #ffcc00;
+        color: #1a1a1a;
+        transform: scale(1.05);
+    }
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+    .intro {
+        background: #252525;
+        padding: 30px;
+        border-radius: 15px;
+        margin-bottom: 30px;
+        border-left: 5px solid #ffcc00;
+    }
+    .intro h2 {
+        color: #4a7c23;
+        font-size: 2em;
+        margin-bottom: 15px;
+    }
+    .intro p, .intro ul {
+        font-size: 1.1em;
+    }
+    .intro ul {
+        list-style: none;
+        padding-left: 0;
+    }
+    .intro ul li::before {
+        content: "🥒 ";
+        color: #4a7c23;
+    }
+    .section-title {
+        text-align: center;
+        font-size: 2.5em;
+        color: #ffcc00;
+        margin: 40px 0 30px;
+        padding-bottom: 10px;
+        border-bottom: 2px dashed #4a7c23;
+    }
+    .okroshka-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        gap: 30px;
+    }
+    .okroshka-card {
+        background: #252525;
+        border-radius: 15px;
+        overflow: hidden;
+        transition: 0.3s;
+        border: 1px solid #3a3a3a;
+        display: flex;
+        flex-direction: column;
+    }
+    .okroshka-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px rgba(74,124,35,0.3);
+        border-color: #4a7c23;
+    }
+    
+    /* ВОТ ГЛАВНОЕ ИСПРАВЛЕНИЕ - КОНТЕЙНЕР ДЛЯ КАРТИНКИ */
+    .okroshka-card .image-container {
+        width: 100%;
+        height: 250px;
+        overflow: hidden;
+        position: relative;
+        background: #1a1a1a;
+    }
+    
+    /* САМА КАРТИНКА - ОБРЕЗАЕТСЯ РОВНО ПО РАЗМЕРАМ */
+    .okroshka-card .image-container img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+        display: block;
+        transition: transform 0.3s;
+    }
+    
+    .okroshka-card:hover .image-container img {
+        transform: scale(1.05);
+    }
+    
+    .okroshka-card .content {
+        padding: 20px;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
+    .okroshka-card h3 {
+        color: #ffcc00;
+        font-size: 1.4em;
+        margin-bottom: 10px;
+    }
+    .okroshka-card .taste {
+        background: #1a1a1a;
+        padding: 10px;
+        border-radius: 8px;
+        margin-bottom: 15px;
+        font-style: italic;
+        border-left: 3px solid #ffcc00;
+    }
+    .okroshka-card h4 {
+        color: #4a7c23;
+        margin: 10px 0;
+    }
+    .okroshka-card ul, .okroshka-card ol {
+        padding-left: 20px;
+    }
+    .okroshka-card ol li {
+        margin-bottom: 5px;
+    }
+    footer {
+        background: #111;
+        text-align: center;
+        padding: 30px;
+        margin-top: 50px;
+        border-top: 3px solid #4a7c23;
+        color: #777;
+    }
+    footer a {
+        color: #ffcc00;
+        text-decoration: none;
+    }
+    @media (max-width: 600px) {
+        header h1 {
+            font-size: 2em;
+        }
+        .okroshka-grid {
+            grid-template-columns: 1fr;
+        }
+        .okroshka-card .image-container {
+            height: 200px;
+        }
+    }
+</style>
+</head>
+<body>
+
+<header>
+    <h1>🥒 ВСЕОКРОШКИ.РУ</h1>
+    <p>Окрошки на всех напитках планеты -- рецепты, вкусы, фото</p>
+</header>
+
+<nav>
+    <button onclick="scrollToSection('intro')">Что такое окрошка?</button>
+    <button onclick="scrollToSection('traditional')">Традиционные</button>
+    <button onclick="scrollToSection('milk')">Кисломолочные</button>
+    <button onclick="scrollToSection('broth')">Бульоны и вода</button>
+    <button onclick="scrollToSection('exotic')">Экзотика и фьюжн</button>
+    <button onclick="scrollToSection('alcohol')">Алкогольные</button>
+</nav>
+
+<div class="container">
+
+    <!-- ВВЕДЕНИЕ -->
+    <div id="intro" class="intro">
+        <h2>🥣 Что такое окрошка и что туда добавляют?</h2>
+        <p><strong>Окрошка</strong> -- это традиционный холодный суп русской кухни, представляющий собой смесь мелко нарезанных ингредиентов, залитых жидкой основой. Ключевая особенность блюда -- использование кваса, хотя современные вариации допускают множество других «окрошек» (жидких баз).</p>
+        <br>
+        <p><strong>Основа нарезки (классическая):</strong></p>
+        <ul>
+            <li>Отварной картофель</li>
+            <li>Отварные яйца</li>
+            <li>Свежие огурцы</li>
+            <li>Редис</li>
+            <li>Вареная колбаса (докторская) или отварное мясо (говядина, курица)</li>
+            <li>Зелень (укроп, зеленый лук, петрушка)</li>
+            <li>Сметана (часто смешивается с заливкой для белого цвета)</li>
+        </ul>
+    </div>
+
+    <!-- РАЗДЕЛ 1: ТРАДИЦИОННЫЕ -->
+    <h2 id="traditional" class="section-title">🥖 Традиционные окрошки на квасе</h2>
+    <div class="okroshka-grid">
+
+        <!-- Окрошка 1 -->
+        <div class="okroshka-card">
+            <!-- ВСТАВЬ СВОЮ ССЫЛКУ НА ФОТО В src="" -->
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRUDri2EzP6qLGVeapPtDiin0kX_w0wBs-AbrOnEw_Trg&s=10" alt="Окрошка на белом квасе" loading="lazy">
+            <div class="content">
+                <h3>Окрошка на белом хлебном квасе (Классическая)</h3>
+                <div class="taste"><strong>Вкус:</strong> Бодрящая кислинка натурального брожения идеально балансирует жирность вареной колбасы и сладость яиц. Пузырьки газа лопаются на языке, а хрен или горчица добавляют пикантности в послевкусии.</div>
+                <h4>Рецепт:</h4>
+                <ol>
+                    <li>Нарезать кубиками: 3 вареные картофелины, 4 яйца, 3 огурца, 300 г докторской колбасы, пучок редиса.</li>
+                    <li>Измельчить пучок укропа и 100 г зеленого лука. Лук перетереть с солью до появления сока.</li>
+                    <li>Смешать нарезку. Залить 1.5 л белого хлебного кваса (несладкого).</li>
+                    <li>Добавить 200 г сметаны, 1 ст. л. хрена, 1 ч. л. горчицы. Тщательно размешать. Охлаждать 1 час.</li>
+                </ol>
+            </div>
+        </div>
+
+        <!-- Окрошка 2 -->
+        <div class="okroshka-card">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRXtU3L0yNOnIiUT2MLAXoRWM-8DnS1jXtxtEh1mSzPyNya4sWxZ3W0rxXr&s=10" alt="Окрошка на темном квасе" loading="lazy">
+            <div class="content">
+                <h3>Окрошка на темном квасе</h3>
+                <div class="taste"><strong>Вкус:</strong> Более насыщенный карамельный оттенок и легкая горчинка жженого солода. Вкус получается более глубоким, требующим добавления большего количества сметаны для смягчения.</div>
+                <h4>Рецепт:</h4>
+                <ol>
+                    <li>Нарезка идентична классической, но редис не обязателен.</li>
+                    <li>Вместо свежих огурцов можно использовать малосольные (200 г) и свежие (150 г).</li>
+                    <li>Залить 1.5 л темного кваса. Добавить 150 г сметаны и черный молотый перец.</li>
+                </ol>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- РАЗДЕЛ 2: КИСЛОМОЛОЧНЫЕ -->
+    <h2 id="milk" class="section-title">🥛 Кисломолочные окрошки</h2>
+    <div class="okroshka-grid">
+
+        <!-- Окрошка 3 -->
+        <div class="okroshka-card">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTLKasH8g_kXXCgmjgQdJ67E60Pdr134ZOV7DkvUZTMHQ&s=10" alt="Окрошка на кефире" loading="lazy">
+            <div class="content">
+                <h3>Окрошка на кефире</h3>
+                <div class="taste"><strong>Вкус:</strong> Самый популярный современный вариант. Густая, обволакивающая текстура и резкая, освежающая кислинка. Часто разбавляется минералкой для легкости. Вкус сливочный, сильно выражен вкус свежего огурца.</div>
+                <h4>Рецепт:</h4>
+                <ol>
+                    <li>Нарезать: 3 картофелины, 4 яйца, 4 огурца, 300 г куриной грудки (отварной), пучок редиса, укроп, лук.</li>
+                    <li>Залить 1 л кефира (3.2%) и 500 мл холодной газированной воды.</li>
+                    <li>Выдавить 1 лимон. Посолить. Добавить сметану по желанию.</li>
+                </ol>
+            </div>
+        </div>
+
+        <!-- Окрошка 4 -->
+        <div class="okroshka-card">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTwZc9A6lnEbcEl9bgGiyn28Q6T7jogEeunvEXDXsAEPXGABdXwze7P9uL6&s=10" alt="Окрошка на айране" loading="lazy">
+            <div class="content">
+                <h3>Окрошка на айране</h3>
+                <div class="taste"><strong>Вкус:</strong> Солоноватая, слегка пенная основа. Привкус кавказской кухни. Отлично сочетается с бараниной вместо колбасы и большим количеством кинзы.</div>
+                <h4>Рецепт:</h4>
+                <ol>
+                    <li>Нарезка: баранина отварная (300 г), картофель (3 шт.), яйца (4 шт.), огурцы (3 шт.), много кинзы и базилика.</li>
+                    <li>Залить 1.5 л соленого айрана. Добавить 2 зубчика чеснока (через пресс).</li>
+                </ol>
+            </div>
+        </div>
+
+        <!-- Окрошка 5 -->
+        <div class="okroshka-card">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS90P0UOVeRz-E8GfTZUvHT8NZ_atU3607Pyy2xVlzGWQ&s=10" alt="Окрошка на мацони" loading="lazy">
+            <div class="content">
+                <h3>Окрошка на мацони (Грузинский вариант)</h3>
+                <div class="taste"><strong>Вкус:</strong> Терпкий, кислый, освежающий, с легкой жгучестью.</div>
+                <h4>Рецепт:</h4>
+                <ol>
+                    <li>Нарезка как на кефире, но с добавлением кинзы и тархуна.</li>
+                    <li>Развести 1 л мацони с 400 мл холодной воды. Посолить.</li>
+                    <li>Добавить красный острый перец (хлопьями) для пикантности.</li>
+                </ol>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- РАЗДЕЛ 3: БУЛЬОНЫ И ВОДА -->
+    <h2 id="broth" class="section-title">🍖 На бульонах, воде и неожиданном</h2>
+    <div class="okroshka-grid">
+
+        <!-- Окрошка 6 -->
+        <div class="okroshka-card">
+            <img src="https://arborio.ru/wordpress/wp-content/uploads/2023/06/mineral-okroshka-1.jpg.webp" alt="Окрошка на минералке" loading="lazy">
+            <div class="content">
+                <h3>Окрошка на минералке со сметаной</h3>
+                <div class="taste"><strong>Вкус:</strong> Пузырящийся, кисло-сливочный, очень легкий.</div>
+                <h4>Рецепт:</h4>
+                <ol>
+                    <li>Классическая нарезка с колбасой.</li>
+                    <li>Смешать 400 г сметаны, сок 1 лимона, соль, сахар (1 ч.л.).</li>
+                    <li>Залить смесь 1.5 л сильно газированной минеральной воды (Боржоми, Нарзан).</li>
+                </ol>
+            </div>
+        </div>
+
+        <!-- Окрошка 7 -->
+        <div class="okroshka-card">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT2omLXzm268RXlKwXs1Ej9zRNdOMeSyRTO_d4eObwirm-P70poYYI2iY4&s=10" alt="Окрошка на рассоле" loading="lazy">
+            <div class="content">
+                <h3>Окрошка на рассоле (Огуречная)</h3>
+                <div class="taste"><strong>Вкус:</strong> Ядерно-соленый, супер-кислый, антипохмельный.</div>
+                <h4>Рецепт:</h4>
+                <ol>
+                    <li>Нарезка: соленые огурцы (300 г), вареная картошка (3 шт.), яйца (4 шт.), свежий огурец (1 шт.), зеленый лук (150 г).</li>
+                    <li>Залить смесью: 500 мл огуречного рассола и 700 мл воды. Добавить сметану и черный перец. Соль не нужна.</li>
+                </ol>
+            </div>
+        </div>
+
+        <!-- Окрошка 8 -->
+        <div class="okroshka-card">
+            <img src="https://www.russianfood.com/dycontent/images_upl/70/big_69362.jpg" alt="Окрошка на мясном бульоне" loading="lazy">
+            <div class="content">
+                <h3>Окрошка на мясном бульоне (Уральский вариант)</h3>
+                <div class="taste"><strong>Вкус:</strong> Сытный мясной вкус, кислота от капусты дает эффект холодных щей.</div>
+                <h4>Рецепт:</h4>
+                <ol>
+                    <li>Сварить прозрачный говяжий бульон. Охладить и снять жир.</li>
+                    <li>Нарезка: много отварной говядины (400 г), квашеная капуста вместо огурцов (200 г), картофель, яйца.</li>
+                    <li>Залить бульоном, добавив для кислоты лимонный сок или немного рассола от капусты.</li>
+                </ol>
+            </div>
+        </div>
+
+        <!-- Окрошка 9 -->
+        <div class="okroshka-card">
+            <img src="https://www.russianfood.com/dycontent/images_upl/275/big_274735.jpg  " alt="Окрошка на грибном отваре" loading="lazy">
+            <div class="content">
+                <h3>Окрошка на грибном отваре (Постная)</h3>
+                <div class="taste"><strong>Вкус:</strong> Лесной аромат, земляной грибной вкус, неожиданная свежесть.</div>
+                <h4>Рецепт:</h4>
+                <ol>
+                    <li>Отварить сушеные белые грибы (50 г в 1 л воды). Отвар процедить. Грибы нарезать.</li>
+                    <li>Нарезка без яиц и мяса: картофель, огурцы, редис, вареная морковь, грибы.</li>
+                    <li>Залить остуженным отваром, добавить квашеную капусту для кислинки и постный майонез.</li>
+                </ol>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- РАЗДЕЛ 4: ЭКЗОТИКА И ФЬЮЖН -->
+    <h2 id="exotic" class="section-title">🌴 Экзотика и фьюжн</h2>
+    <div class="okroshka-grid">
+
+        <!-- Окрошка 10 -->
+        <div class="okroshka-card">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRVZ3B2A4pyhOQJtlQ6NhZz5HySyvJ1ZskAfK5LH7QU11YL91OIg5kzRKdH&s=10" alt="Окрошка на кокосовом молоке" loading="lazy">
+            <div class="content">
+                <h3>Окрошка на кокосовом молоке (Тайский фьюжн)</h3>
+                <div class="taste"><strong>Вкус:</strong> Цитрусовая свежесть лайма, сладость кокоса, удар чили и умами от рыбного соуса.</div>
+                <h4>Рецепт:</h4>
+                <ol>
+                    <li>Нарезка: креветки (300 г отварных), авокадо (1 шт.), огурец, яйца.</li>
+                    <li>Заправка: кокосовое молоко (400 мл) + сок лайма (2 шт.) + рыбный соус (1 ст.л.) + перец чили.</li>
+                </ol>
+            </div>
+        </div>
+
+        <!-- Окрошка 11 -->
+        <div class="okroshka-card">
+            <img src="https://img.iamcook.ru/2021/upl/recipes/cat/u-dfc20f426e1dd46e9ebdbf10e7722986.jpg" alt="Окрошка на свекольном фреше" loading="lazy">
+            <div class="content">
+                <h3>Окрошка на свекольном фреше (Розовая)</h3>
+                <div class="taste"><strong>Вкус:</strong> Землистая сладость овощей и пикантная кислинка.</div>
+                <h4>Рецепт:</h4>
+                <ol>
+                    <li>Нарезка классическая (колбаса/мясо, картофель, яйца, огурцы).</li>
+                    <li>Заправка: сок 2 сырых свекл и 2 морковок, пропущенных через соковыжималку. Смешать с 300 мл воды, соком лимона и сметаной.</li>
+                </ol>
+            </div>
+        </div>
+
+        <!-- Окрошка 12 -->
+        <div class="okroshka-card">
+            <img src="https://www.russianfood.com/dycontent/images_upl/326/big_325812.jpg" alt="Окрошка Кровавая Мэри" loading="lazy">
+            <div class="content">
+                <h3>Окрошка на томатном соке с водкой (Кровавая Мэри суп)</h3>
+                <div class="taste"><strong>Вкус:</strong> Жгучий, пряный, алкогольный. Сельдерей дает сочный хруст.</div>
+                <h4>Рецепт:</h4>
+                <ol>
+                    <li>Нарезка: креветки, сельдерей (2 стебля), огурцы, оливки.</li>
+                    <li>Заправка: 500 мл густого томатного сока, сок лимона, Вустерширский соус, табаско, 100 мл водки.</li>
+                </ol>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- РАЗДЕЛ 5: АЛКОГОЛЬНЫЕ -->
+    <h2 id="alcohol" class="section-title">🍺 Алкогольные и "Взрослые" окрошки</h2>
+    <div class="okroshka-grid">
+
+        <!-- Окрошка 13 -->
+        <div class="okroshka-card">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRjIoH32HrofOMhsWpHp-vGjrrKKXt9fB8pubodGLxY8Q&s=10" alt="Окрошка на пиве" loading="lazy">
+            <div class="content">
+                <h3>Окрошка на пиве</h3>
+                <div class="taste"><strong>Вкус:</strong> Солодовый, хлебный, с легкой хмельной горчинкой.</div>
+                <h4>Рецепт:</h4>
+                <ol>
+                    <li>Нарезка: копченая курица (300 г), картофель, яйца, огурцы, редис, чеснок, укроп.</li>
+                    <li>Залить 0.5 л светлого непастеризованного пива и 300 мл воды. Добавить лимонный сок, чтобы убрать излишнюю горечь.</li>
+                </ol>
+            </div>
+        </div>
+
+        <!-- Окрошка 14 -->
+        <div class="okroshka-card">
+            <img src="https://www.russianfood.com/dycontent/images_upl/43/big_42657.jpg" alt="Окрошка на Бейлисе" loading="lazy">
+            <div class="content">
+                <h3>Окрошка на Бейлисе (Десертная / Авангард)</h3>
+                <div class="taste"><strong>Вкус:</strong> Сладко-сливочный алкогольный шок, который спорит с нейтральностью яйца и свежестью огурца. Странный мусс.</div>
+                <h4>Рецепт:</h4>
+                <ol>
+                    <li>Нарезка ТОЛЬКО из сладковатых или нейтральных продуктов: свежие огурцы (сладкие), консервированные персики кубиками, яйца (белок).</li>
+                    <li>Заправка: 300 мл Бейлиса смешать с 200 мл жирных сливок. Категорически не солить.</li>
+                    <li>Подавать как экстремальный гастрономический эксперимент, посыпав ванилью.</li>
+                </ol>
+            </div>
+        </div>
+
+        <!-- Окрошка 15 -->
+        <div class="okroshka-card">
+            <img src="https://static.sobaka.ru/images/image/01/58/11/18/_normal.jpg?v=1657184953" alt="Окрошка на шампанском" loading="lazy">
+            <div class="content">
+                <h3>Окрошка на шампанском (Фруктовая версия)</h3>
+                <div class="taste"><strong>Вкус:</strong> Шипучий, сладкий, праздничный десерт.</div>
+                <h4>Рецепт:</h4>
+                <ol>
+                    <li>Только фруктово-ягодная нарезка: виноград без косточек, клубника, персик.</li>
+                    <li>Залить охлажденным полусухим шампанским и каплей мятного сиропа. Есть сразу, пока не выдохлось.</li>
+                </ol>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<footer>
+    <p>© 2026 <strong>ВсеОкрошки.ру</strong> -- Окрошки на всех напитках планеты!</p>
+    <p>Сайт создан с любовью к холодным супам. Приятного аппетита! 🥣</p>
+    <p><a href="#top">↑ Наверх</a></p>
+</footer>
+
+<script>
+    function scrollToSection(id) {
+        document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+    }
+</script>
+
+</body>
+</html>
